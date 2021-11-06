@@ -1,0 +1,61 @@
+{
+  "name": "timeline",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.10.2",
+    "axios": "^0.22.0",
+    "babel-runtime": "^6.26.0",
+    "bootstrap": "^5.0.0-beta3",
+    "bootstrap-icons": "^1.6.1",
+    "core-js": "^3.6.5",
+    "d3": "^3.5.17",
+    "d3-dsv": "^3.0.1",
+    "date-fns": "^2.25.0",
+    "jquery": "^3.6.0",
+    "jshint": "^2.13.1",
+    "offcanvas-bootstrap": "^2.5.2",
+    "vue": "^2.6.11",
+    "vue-gtag": "^1.16.1",
+    "vue-markdown": "^2.2.4"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-prettier": "^6.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-vue": "^6.2.2",
+    "prettier": "^2.2.1",
+    "sass": "^1.42.1",
+    "sass-loader": "^10.0.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "@vue/prettier"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
