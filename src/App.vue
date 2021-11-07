@@ -33,6 +33,11 @@
 
                                     <time>{{ item.dateLong }} </time>
 
+                                    <span class="timeLineEventNav ">
+                                        <button v-if="item.counter > 0" class="timeLineEventNavPrev btn btn-dark mb-2" @click="goToPreviousTimeLineEvent(item.counter)">▲</button>
+                                        <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-dark" @click="goToNextTimeLineEvent(item.counter)">▼</button>
+                                    </span>
+
                                     <!-- <span class='timeDifference'>({{item.timeDifference}} later)</span> -->
 
                                     <h2 class="">
@@ -129,6 +134,43 @@ export default {
         this.randomBackgroundColor();
     },
     methods: {
+        goToNextTimeLineEvent(i) {
+            let j = i + 1;
+
+            let item = document.querySelector("#item" + j);
+            // console.log('document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext"): ', document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext"));
+            document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext").forEach(function (item) {
+                item.classList.remove("visible")
+            });
+            document.querySelectorAll("#item" + j + " button").forEach(function (item) {
+                item.classList.add("visible")
+            });
+            item.scrollIntoView({
+                behavior: "smooth",
+                // alignToTop: true,
+                block: "center"
+                // block: "end",
+                // inline: "nearest"
+            });
+        },
+        goToPreviousTimeLineEvent(i) {
+            let j = i - 1;
+
+            let item = document.querySelector("#item" + j);
+            document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext").forEach(function (item) {
+                item.classList.remove("visible")
+            });
+            document.querySelectorAll("#item" + j + " button").forEach(function (item) {
+                item.classList.add("visible")
+            });
+            item.scrollIntoView({
+                behavior: "smooth",
+                // alignToTop: true,
+                block: "center"
+                // block: "end",
+                // inline: "nearest"
+            });
+        },
         // randomizer
         randomFromTo(from, to) {
             return Math.floor(Math.random() * (to - from + 1) + from);
@@ -500,7 +542,7 @@ body {
     z-index: 2;
 }
 
-.timeLineEventActive span {
+.timeLineEventActive>span {
     opacity: 1;
     outline: 5px solid #4B4E4D;
     transition: 0.1s ease-in-out;
@@ -522,7 +564,7 @@ body {
     font-size: 1em;
 }
 
-.timeLineEvent span:before {
+.timeLineEvent>span:before {
     content: "◯";
     font-size: 24px;
     color: transparent;
@@ -537,8 +579,25 @@ body {
     vertical-align: text-bottom;
 }
 
-.timeLineEventActive span:before {
+.timeLineEventActive>span:before {
     background: #4B4E4D;
+}
+
+.timeLineEventNav {
+    display: block;
+    position: absolute;
+    left: -10em;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.timeLineEventNav button {
+    display: none;
+}
+
+#item0 button:first-of-type,
+.timeLineEventNav button.visible {
+    display: block;
 }
 
 .timeAxis {
