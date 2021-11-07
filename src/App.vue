@@ -389,6 +389,11 @@ export default {
                     fixTimeLineData(that.timeLineData[i]);
                 }
 
+                // sorting based on unix time, so the order in the cvs is not important anymore
+                that.timeLineData.sort(function (a, b) {
+                    return (getUnixTime(new Date(a.date)) > getUnixTime(new Date(b.date))) ? 1 : ((getUnixTime(new Date(b.date)) > getUnixTime(new Date(a.date))) ? -1 : 0);
+                });
+
                 firstDate = that.timeLineData[0].date;
                 lastDate = that.timeLineData[that.timeLineData.length - 1].date;
                 // differenceInMilliseconds(firstDate,lastDate)
