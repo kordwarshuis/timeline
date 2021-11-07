@@ -20,6 +20,7 @@
     "jquery": "^3.6.0",
     "jshint": "^2.13.1",
     "offcanvas-bootstrap": "^2.5.2",
+    "smoothscroll-polyfill": "^0.4.4",
     "vue": "^2.6.11",
     "vue-gtag": "^1.16.1",
     "vue-markdown": "^2.2.4"
