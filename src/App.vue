@@ -29,8 +29,8 @@
 
                             <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'position: absolute;  left: ' + item.left + 'px; top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
 
-                                <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="p-3">
-
+                                <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="p-1 ps-3 pe-3">
+                                    <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm" @click="goToPreviousTimeLineEvent(item.counter)">▲</button>
                                     <time>{{ item.dateLong }} </time>
 
                                     <span class="timeLineEventNav ">
@@ -52,6 +52,7 @@
                                         <vue-markdown>{{ item.Text }}</vue-markdown>
                                     </div>
 
+                                    <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext2 btn btn-outline-secondary btn-sm" @click="goToNextTimeLineEvent(item.counter)">▼</button>
                                 </span>
                                 <template v-else>
                                     <time>{{ item.dateLong }} </time>
@@ -135,40 +136,32 @@ export default {
     },
     methods: {
         goToNextTimeLineEvent(i) {
-            let j = i + 1;
-
-            let item = document.querySelector("#item" + j);
+            i++
+            let item = document.querySelector("#item" + i);
             // console.log('document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext"): ', document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext"));
             document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext").forEach(function (item) {
                 item.classList.remove("visible")
             });
-            document.querySelectorAll("#item" + j + " button").forEach(function (item) {
+            document.querySelectorAll("#item" + i + " button").forEach(function (item) {
                 item.classList.add("visible")
             });
             item.scrollIntoView({
                 behavior: "smooth",
-                // alignToTop: true,
                 block: "center"
-                // block: "end",
-                // inline: "nearest"
             });
         },
         goToPreviousTimeLineEvent(i) {
-            let j = i - 1;
-
-            let item = document.querySelector("#item" + j);
+            i--
+            let item = document.querySelector("#item" + i);
             document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext").forEach(function (item) {
                 item.classList.remove("visible")
             });
-            document.querySelectorAll("#item" + j + " button").forEach(function (item) {
+            document.querySelectorAll("#item" + i + " button").forEach(function (item) {
                 item.classList.add("visible")
             });
             item.scrollIntoView({
                 behavior: "smooth",
-                // alignToTop: true,
                 block: "center"
-                // block: "end",
-                // inline: "nearest"
             });
         },
         // randomizer
@@ -539,7 +532,8 @@ body {
         41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
         100px 100px 80px rgba(0, 0, 0, 0.07);
 
-    // min-width: 100%;
+    min-width: 90%;
+    z-index: 1;
 }
 
 /* after touch / mouseover */
@@ -558,6 +552,7 @@ body {
 }
 
 .timeLineEvent time {
+    display: block;
     margin: 0.3em 0 0 0;
     font-size: 0.7em;
     font-style: italic;
@@ -591,9 +586,10 @@ body {
 .timeLineEventNav {
     display: block;
     position: absolute;
-    left: -10em;
+    right: -1em;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 4;
 }
 
 .timeLineEventNav button {
@@ -604,6 +600,18 @@ body {
 .timeLineEventNav button.visible {
     display: block;
 }
+
+.timeLineEventNavPrev2 {
+    // position: absolute;
+    display: block;
+}
+
+.timeLineEventNavNext2 {
+    position: relative;
+
+}
+
+
 
 .timeAxis {
     z-index: 0;
