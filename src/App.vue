@@ -36,11 +36,9 @@
                         </div>
 
                         <h1 class="">{{ introductionTitle }}</h1>
-                        <p class="subheader">{{ introductionText }}</p>
-                        <!-- <div>
-                            <vue-markdown>{{ introductionText }}</vue-markdown>
-                        </div> -->
-
+                        <!-- https://github.com/miaolz123/vue-markdown/issues/43 : -->
+                        <vue-markdown :source='introductionText'></vue-markdown>
+                        
                         <div id="timeKnotsContainer" style="position: relative; ">
 
                             <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
