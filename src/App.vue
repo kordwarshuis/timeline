@@ -1,5 +1,21 @@
 <template>
 <div id="app" class="">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" data-bs-keyboard="false" data-bs-backdrop="false" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Configuration</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div id="sidebar" class="border rounded">
+                <!-- <h1 class="">Configuration</h1> -->
+                <!-- Path to csv -->
+                <div class="p-2" id="enter-input-file-block">
+                    <p>Enter the path to a csv file: <input class="w-100" id="sourceURL" type="text" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pub?gid=0&single=true&output=csv" onfocus="this.value=''"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main class="">
         <div class="container ps-1 pe-1" style="max-width: 40em;">
             <div class="row align-items-start">
@@ -103,14 +119,17 @@ import {
     differenceInMilliseconds
 } from 'date-fns';
 import {
-    nl, en
+    nl,
+    en
 } from 'date-fns/locale';
 import {
     TimeKnots
 } from '@/assets/js/timeknots.js';
 import VueMarkdown from 'vue-markdown';
 
-import {localisation} from '../localisation';
+import {
+    localisation
+} from '../localisation';
 
 let loc;
 switch (localisation.locale) {
@@ -350,15 +369,20 @@ export default {
 
                     // add variants of the time stamp that are more readable
                     // regex: https://stackoverflow.com/a/5646753
-                    d.dateLong = format(new Date(d.date), formatDateLong, {locale: loc});
+                    d.dateLong = format(new Date(d.date), formatDateLong, {
+                        locale: loc
+                    });
                     d.dateShort = format(new Date(d.date), formatDateShort);
                 }
 
-
                 function addTimeDifferences(d, e, firstDate) {
-                    d.timeDifferenceWithFirstEvent = formatDistance(new Date(d.date), new Date(firstDate), {locale: loc});
+                    d.timeDifferenceWithFirstEvent = formatDistance(new Date(d.date), new Date(firstDate), {
+                        locale: loc
+                    });
 
-                    d.timeDifferenceWithLastEvent = formatDistance(new Date(d.date), new Date(e.date), {locale: loc});
+                    d.timeDifferenceWithLastEvent = formatDistance(new Date(d.date), new Date(e.date), {
+                        locale: loc
+                    });
                 }
 
                 // clone myData ES6 way
