@@ -508,7 +508,7 @@ body {
 }
 
 #timeKnotsContainer {
-    padding-bottom: 20em;
+    padding-bottom: 200em;
 }
 
 .timeLineEvent,
