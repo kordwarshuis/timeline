@@ -2,7 +2,9 @@
 
 ## Demo
 
-Data source: https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pubhtml?gid=0&single=true
+Google sheet webversion of data source: https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pubhtml?gid=0&single=true
+
+Google sheet CSV version of data source: https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pub?gid=0&single=true&output=csv
 
 Timeline: https://dwarshuis.com/various/timeline/view/
 
