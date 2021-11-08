@@ -10,7 +10,7 @@
                 <!-- <h1 class="">Configuration</h1> -->
                 <!-- Path to csv -->
                 <div class="p-2" id="enter-input-file-block">
-                    <p>Enter the path to a csv file: <input class="w-100" id="sourceURL" type="text" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pub?gid=0&single=true&output=csv" onfocus="this.value=''"></p>
+                    <p>{{localisationConfigMenuEnterPathToCSV}} <input class="w-100" id="sourceURL" type="text" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pub?gid=0&single=true&output=csv" onfocus="this.value=''"></p>
                 </div>
             </div>
         </div>
@@ -160,7 +160,8 @@ export default {
                 "#dcdcdc", "#d3d3d3", "#e5e4e2", "#dcdcdc", "#dbd7d2", "#d3d3d3"
             ],
             localeTextAppend1: localisation.textAppend1,
-            localeTextAppend2: localisation.textAppend2
+            localeTextAppend2: localisation.textAppend2,
+            localisationConfigMenuEnterPathToCSV: localisation.configMenu.enterPathToCSV
         }
     },
     mounted() {
