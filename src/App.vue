@@ -34,8 +34,8 @@
                                     <time>{{ item.dateLong }} </time>
 
                                     <span class="timeLineEventNav ">
-                                        <button v-if="item.counter > 0" class="timeLineEventNavPrev btn btn-dark mb-2" @click="goToPreviousTimeLineEvent(item.counter)">▲</button>
-                                        <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-dark" @click="goToNextTimeLineEvent(item.counter)">▼</button>
+                                        <button v-if="item.counter > 0" class="timeLineEventNavPrev btn btn-dark mb-2" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
+                                        <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-dark" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                     </span>
 
                                     <!-- <span class='timeDifference'>({{item.timeDifference}} later)</span> -->
@@ -135,23 +135,12 @@ export default {
         this.randomBackgroundColor();
     },
     methods: {
-        goToNextTimeLineEvent(i) {
-            i++
-            let item = document.querySelector("#item" + i);
-            // console.log('document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext"): ', document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext"));
-            document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext").forEach(function (item) {
-                item.classList.remove("visible")
-            });
-            document.querySelectorAll("#item" + i + " button").forEach(function (item) {
-                item.classList.add("visible")
-            });
-            item.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-        },
-        goToPreviousTimeLineEvent(i) {
-            i--
+        goToTimeLineEvent(i, event) {
+            if (event.target.classList.contains("timeLineEventNavNext")) {
+                i++
+            } else {
+                i--
+            }
             let item = document.querySelector("#item" + i);
             document.querySelectorAll(".timeLineEventNavPrev, .timeLineEventNavNext").forEach(function (item) {
                 item.classList.remove("visible")
@@ -164,6 +153,7 @@ export default {
                 block: "center"
             });
         },
+
         // randomizer
         randomFromTo(from, to) {
             return Math.floor(Math.random() * (to - from + 1) + from);
@@ -613,8 +603,6 @@ body {
     position: relative;
 
 }
-
-
 
 .timeAxis {
     z-index: 0;
