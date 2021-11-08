@@ -27,10 +27,14 @@
 
                         <div id="timeKnotsContainer" style="position: relative; ">
 
-                            <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'position: absolute;  left: ' + item.left + 'px; top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
+                            <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'position: absolute; left: ' + item.left + 'px; top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
 
-                                <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="p-1 ps-3 pe-3">
-                                    <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm" @click="goToPreviousTimeLineEvent(item.counter)">▲</button>
+                                <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
+                                    <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
+                                    <span v-if="item.counter>0" class="timeDifferenceContainer">
+                                        <span class='timeDifference timeDifferenceWithLastEvent'>{{item.timeDifferenceWithLastEvent}} later</span>
+                                        <span class='timeDifference timeDifferenceWithFirstEvent'> ({{item.timeDifferenceWithFirstEvent}} vanaf begin.)</span>
+                                    </span>
                                     <time>{{ item.dateLong }} </time>
 
                                     <span class="timeLineEventNav ">
@@ -38,25 +42,22 @@
                                         <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-dark" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                     </span>
 
-                                    <!-- <span class='timeDifference'>({{item.timeDifference}} later)</span> -->
-
                                     <h2 class="">
                                         <vue-markdown>{{ item.Headline }}</vue-markdown>
                                         <!-- Collapse button -->
-                                        <template v-if="item.Text!==''">
+                                        <!-- <template v-if="item.Text!==''">
                                             <a style="position: absolute; top: 0.2em; right: 0.2em;" class="btn btn-outline-secondary btn-sm ms-2" data-bs-toggle="collapse" :href="'#timeLineEvent' + item.counter" role="button" aria-expanded="false" :aria-controls="'timeLineEvent' + item.counter">-</a>
-                                        </template>
+                                        </template> -->
                                     </h2>
                                     <!-- Collapse button -->
                                     <div class="collapse show" :id="'timeLineEvent' + item.counter">
                                         <vue-markdown>{{ item.Text }}</vue-markdown>
                                     </div>
 
-                                    <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext2 btn btn-outline-secondary btn-sm" @click="goToNextTimeLineEvent(item.counter)">▼</button>
+                                    <button class="timeLineEventNavNext2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                 </span>
                                 <template v-else>
                                     <time>{{ item.dateLong }} </time>
-
                                 </template>
 
                             </div>
@@ -136,7 +137,7 @@ export default {
     },
     methods: {
         goToTimeLineEvent(i, event) {
-            if (event.target.classList.contains("timeLineEventNavNext")) {
+            if (event.target.classList.contains("timeLineEventNavNext") || event.target.classList.contains("timeLineEventNavNext2")) {
                 i++
             } else {
                 i--
@@ -341,8 +342,16 @@ export default {
                         locale: nl
                     });
                     d.dateShort = format(new Date(d.date), formatDateShort);
+                }
 
-                    // d.timeDifference = formatDistance(new Date(d.date),new Date(firstDate),{locale: nl});
+                function addTimeDifferences(d, e, firstDate) {
+                    d.timeDifferenceWithFirstEvent = formatDistance(new Date(d.date), new Date(firstDate), {
+                        locale: nl
+                    });
+
+                    d.timeDifferenceWithLastEvent = formatDistance(new Date(d.date), new Date(e.date), {
+                        locale: nl
+                    });
                 }
 
                 // clone myData ES6 way
@@ -380,6 +389,11 @@ export default {
                 firstDate = that.timeLineData[0].date;
                 lastDate = that.timeLineData[that.timeLineData.length - 1].date;
                 // differenceInMilliseconds(firstDate,lastDate)
+
+                addTimeDifferences(that.timeLineData[0], that.timeLineData[0], firstDate);
+                for (let i = 1; i < that.timeLineData.length; i++) {
+                    addTimeDifferences(that.timeLineData[i], that.timeLineData[i - 1], firstDate);
+                }
 
                 let i = 1;
 
@@ -471,7 +485,7 @@ export default {
                     e.target.closest("div.timeLineEvent").classList.add("timeLineEventActive");
                 }
             }
-            
+
             // https://davidwalsh.name/event-delegate
             document.querySelector("body").addEventListener("mouseover", focus, false);
             document.querySelector("body").addEventListener("touchend", focus, true);
@@ -512,7 +526,7 @@ body {
     transition-property: outline;
     transition-delay: 0ms;
     min-width: 10em;
-    
+
     z-index: 1;
     box-shadow:
         2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
@@ -528,18 +542,19 @@ body {
     width: calc(100% - 155px);
     z-index: 1;
 }
-.timeLineEvent>span {
+
+// .timeLineEvent>span {
 // max-height: 3em;
 // overflow: hidden;
-}
+// }
 
 /* after touch / mouseover */
 .timeLineEventActive {
     z-index: 2;
-    
+
 }
 
-.timeLineEventActive>span {
+.timeLineEventActive>span.main-info {
     opacity: 1;
     outline: 5px solid #4B4E4D;
     transition: 0.1s ease-in-out;
@@ -550,6 +565,14 @@ body {
     // max-height: none;
     // overflow: auto;
 }
+
+.timeDifferenceContainer {
+    display: inline-block;
+    padding: 0.1em;
+    font-size: 1.2em;
+}
+
+.timeDifference {}
 
 .timeLineEvent time {
     display: block;
@@ -603,11 +626,12 @@ body {
 
 .timeLineEventNavPrev2 {
     // position: absolute;
-    display: block;
+    // display: block;
 }
 
 .timeLineEventNavNext2 {
-    position: relative;
+    // position: relative !important;
+    // right: 0 !important;
 
 }
 
