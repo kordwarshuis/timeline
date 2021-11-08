@@ -27,7 +27,7 @@
 
                         <div id="timeKnotsContainer" style="position: relative; ">
 
-                            <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'position: absolute; left: ' + item.left + 'px; top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
+                            <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
 
                                 <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
@@ -329,8 +329,6 @@ export default {
                     d.Month = that.padLeadingZeros(d.Month, 2);
                     d.Day = that.padLeadingZeros(d.Day, 2);
                     d.Time = "00:00:00";
-
-                    d.left = 0; //if not created here, the view will not be updated on changes, https://vuejs.org/v2/guide/reactivity.html#For-Arrays
                     d.top = 0;
 
                     // construct final date
@@ -411,7 +409,6 @@ export default {
                         Text: "",
                         Headline: "",
                         nodeType: "timeAxis",
-                        left: 0,
                         top: 0
                     });
                     i++;
@@ -460,13 +457,11 @@ export default {
                             // make timeAxis circles smaller
                             allCircles[i].setAttribute("r", "5");
 
-                            // set left and top positions
-                            timeLineData[i]["left"] = Number(allCircles[i].getAttribute("cx")) + timeAxisOffsetX;
+                            // set top positions
                             timeLineData[i]["top"] = Number(allCircles[i].getAttribute("cy")) + timeAxisOffsetY;
                         }
                         if (timeLineData[i].nodeType === "timeLineEvent") {
-                            // set left and top positions
-                            timeLineData[i]["left"] = Number(allCircles[i].getAttribute("cx")) + timeLineEventOffsetX;
+                            // set top positions
                             timeLineData[i]["top"] = Number(allCircles[i].getAttribute("cy")) + timeLineEventOffsetY;
                         }
                     }
@@ -514,6 +509,11 @@ body {
 
 #timeKnotsContainer {
     padding-bottom: 20em;
+}
+
+.timeLineEvent, .timeAxis {
+    position: absolute;
+    left: 50px;
 }
 
 .timeLineEvent {
@@ -582,8 +582,6 @@ body {
 }
 
 .timeLineEvent h2 {
-    // margin-left: 0.5em;
-    // margin-top: 0em;
     font-size: 1em;
 }
 
@@ -636,11 +634,8 @@ body {
 }
 
 .timeAxis {
-    z-index: 0;
-}
-
-.timeAxis {
     font-size: 0.8em;
+    z-index: 0;
 }
 
 video,
