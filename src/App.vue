@@ -469,10 +469,9 @@ export default {
                         allTimeLineEvents[i].classList.remove("timeLineEventActive");
                     }
                     e.target.closest("div.timeLineEvent").classList.add("timeLineEventActive");
-                    document.dispatchEvent(focusEvent);
                 }
             }
-            let focusEvent = new CustomEvent("focus");
+            
             // https://davidwalsh.name/event-delegate
             document.querySelector("body").addEventListener("mouseover", focus, false);
             document.querySelector("body").addEventListener("touchend", focus, true);
@@ -513,6 +512,7 @@ body {
     transition-property: outline;
     transition-delay: 0ms;
     min-width: 10em;
+    
     z-index: 1;
     box-shadow:
         2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
@@ -528,10 +528,15 @@ body {
     width: calc(100% - 155px);
     z-index: 1;
 }
+.timeLineEvent>span {
+// max-height: 3em;
+// overflow: hidden;
+}
 
 /* after touch / mouseover */
 .timeLineEventActive {
     z-index: 2;
+    
 }
 
 .timeLineEventActive>span {
@@ -542,6 +547,8 @@ body {
     transition-delay: 150ms;
     background: #f5f2a0 !important;
     // background: #ffffff !important;
+    // max-height: none;
+    // overflow: auto;
 }
 
 .timeLineEvent time {
