@@ -6,10 +6,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
 import VueGtag from 'vue-gtag';
 
-import smoothscroll from 'smoothscroll-polyfill';
+import { polyfill } from "seamless-scroll-polyfill";
+polyfill();
 
-// kick off the polyfill!
-smoothscroll.polyfill();
 
 
 Vue.config.productionTip = false;
