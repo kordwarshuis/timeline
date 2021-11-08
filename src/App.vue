@@ -499,6 +499,10 @@ export default {
 </script>
 
 <style lang="scss">
+$offsetTimeLineEvent: 45px;
+
+
+
 body {
     background-color: #35465C !important;
 }
@@ -513,7 +517,7 @@ body {
 
 .timeLineEvent, .timeAxis {
     position: absolute;
-    left: 50px;
+    left: $offsetTimeLineEvent;
 }
 
 .timeLineEvent {
@@ -539,19 +543,13 @@ body {
     // min-width: 18em;
     // max-width: 25em;
 
-    width: calc(100% - 155px);
+    width: calc(100% - #{$offsetTimeLineEvent} - 50px);
     z-index: 1;
 }
-
-// .timeLineEvent>span {
-// max-height: 3em;
-// overflow: hidden;
-// }
 
 /* after touch / mouseover */
 .timeLineEventActive {
     z-index: 2;
-
 }
 
 .timeLineEventActive>span.main-info {
@@ -561,9 +559,6 @@ body {
     transition-property: outline;
     transition-delay: 150ms;
     background: #f5f2a0 !important;
-    // background: #ffffff !important;
-    // max-height: none;
-    // overflow: auto;
 }
 
 .timeDifferenceContainer {
@@ -591,9 +586,9 @@ body {
     color: transparent;
     position: absolute;
     top: 13px;
-    left: -61px;
+    left: calc(0px - $offsetTimeLineEvent + 15px);
     line-height: 3px;
-    width: 58px;
+    width: calc(0px - $offsetTimeLineEvent + 74px);
     cursor: pointer;
     background: #4b4e4d6b;
     height: 5px;
