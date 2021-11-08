@@ -448,7 +448,7 @@ export default {
                     fixTimeLineData(that.timeLineData[that.timeLineData.length - 1]);
 
                     // only proceed if the date is before the last event date
-                    if (getUnixTime(new Date(that.timeLineData[that.timeLineData.length - 1].date)) < getUnixTime(new Date(lastDate))) {
+                    if (getUnixTime(new Date(that.timeLineData[that.timeLineData.length - 1].date)) < (getUnixTime(new Date(lastDate)) + getUnixTime(new Date(lastDate))/100)) {
                         createTimeAxis();
                     }
                 }());
