@@ -32,8 +32,8 @@
                                 <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
                                     <span v-if="item.counter>0" class="timeDifferenceContainer">
-                                        <span class='timeDifference timeDifferenceWithLastEvent'>{{item.timeDifferenceWithLastEvent}} later</span>
-                                        <span class='timeDifference timeDifferenceWithFirstEvent'> ({{item.timeDifferenceWithFirstEvent}} vanaf begin.)</span>
+                                        <span class='timeDifference timeDifferenceWithLastEvent'>{{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}}</span>
+                                        <span class='timeDifference timeDifferenceWithFirstEvent'> ({{item.timeDifferenceWithFirstEvent}} {{ localeTextAppend2 }}.)</span>
                                     </span>
                                     <time>{{ item.dateLong }} </time>
 
@@ -103,12 +103,24 @@ import {
     differenceInMilliseconds
 } from 'date-fns';
 import {
-    nl
+    nl, en
 } from 'date-fns/locale';
 import {
     TimeKnots
 } from '@/assets/js/timeknots.js';
 import VueMarkdown from 'vue-markdown';
+
+import {localisation} from '../localisation';
+
+let loc;
+switch (localisation.locale) {
+    case "en":
+        loc = en;
+        break;
+    case "nl":
+        loc = nl;
+        break;
+}
 
 export default {
     name: "App",
@@ -127,7 +139,9 @@ export default {
             timeLineData: [],
             blockColours: [
                 "#dcdcdc", "#d3d3d3", "#e5e4e2", "#dcdcdc", "#dbd7d2", "#d3d3d3"
-            ]
+            ],
+            localeTextAppend1: localisation.textAppend1,
+            localeTextAppend2: localisation.textAppend2
         }
     },
     mounted() {
@@ -200,6 +214,7 @@ export default {
             buttonMinus.addEventListener("click", minus, false);
         },
         main() {
+            let lang = "nl";
             let that = this;
             let formatDateLong = "d MMMM yyyy"; // date-fns
             // let formatDateLong = "E dd MMM"; // date-fns
@@ -335,20 +350,15 @@ export default {
 
                     // add variants of the time stamp that are more readable
                     // regex: https://stackoverflow.com/a/5646753
-                    d.dateLong = format(new Date(d.date), formatDateLong, {
-                        locale: nl
-                    });
+                    d.dateLong = format(new Date(d.date), formatDateLong, {locale: loc});
                     d.dateShort = format(new Date(d.date), formatDateShort);
                 }
 
-                function addTimeDifferences(d, e, firstDate) {
-                    d.timeDifferenceWithFirstEvent = formatDistance(new Date(d.date), new Date(firstDate), {
-                        locale: nl
-                    });
 
-                    d.timeDifferenceWithLastEvent = formatDistance(new Date(d.date), new Date(e.date), {
-                        locale: nl
-                    });
+                function addTimeDifferences(d, e, firstDate) {
+                    d.timeDifferenceWithFirstEvent = formatDistance(new Date(d.date), new Date(firstDate), {locale: loc});
+
+                    d.timeDifferenceWithLastEvent = formatDistance(new Date(d.date), new Date(e.date), {locale: loc});
                 }
 
                 // clone myData ES6 way
@@ -560,8 +570,6 @@ body {
     font-size: 1.2em;
 }
 
-.timeDifference {}
-
 .timeLineEvent time {
     display: block;
     margin: 0.3em 0 0 0;
@@ -608,17 +616,6 @@ body {
 #item0 button:first-of-type,
 .timeLineEventNav button.visible {
     display: block;
-}
-
-.timeLineEventNavPrev2 {
-    // position: absolute;
-    // display: block;
-}
-
-.timeLineEventNavNext2 {
-    // position: relative !important;
-    // right: 0 !important;
-
 }
 
 .timeAxis {
