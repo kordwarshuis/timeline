@@ -35,9 +35,9 @@
                             </template>
                         </div>
 
-                        <h1 class="">{{ introductionTitle }}</h1>
+                        <h1 class="ps-3 pe-3 pt-5">{{ introductionTitle }}</h1>
                         <!-- https://github.com/miaolz123/vue-markdown/issues/43 : -->
-                        <vue-markdown :source='introductionText'></vue-markdown>
+                        <vue-markdown class="ps-3 pe-3" :source='introductionText'></vue-markdown>
                         
                         <div id="timeKnotsContainer" style="position: relative; ">
 
