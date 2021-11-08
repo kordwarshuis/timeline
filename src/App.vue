@@ -467,8 +467,9 @@ export default {
             }
 
             function draw(timeKnotsContainerHeight) {
-                if (document.querySelector("#timeKnotsContainer svg")) {
-                    document.querySelector("#timeKnotsContainer svg").remove();
+                let svg = document.querySelector("#timeKnotsContainer svg");
+                if (svg) {
+                    svg.remove();
                 }
 
                 TimeKnots.draw("#timeKnotsContainer", that.timeLineData, {
