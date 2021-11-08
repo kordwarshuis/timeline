@@ -317,7 +317,6 @@ export default {
 
                     buttonScalePlus.addEventListener("click", scalePlus, false);
                     buttonScaleMinus.addEventListener("click", scaleMinus, false);
-
                 }
 
                 function fixTimeLineData(d) {
@@ -481,7 +480,6 @@ export default {
                 }
             }
 
-            // https://davidwalsh.name/event-delegate
             document.querySelector("body").addEventListener("mouseover", focus, false);
             document.querySelector("body").addEventListener("touchend", focus, true);
 
@@ -501,8 +499,6 @@ export default {
 <style lang="scss">
 $offsetTimeLineEvent: 45px;
 
-
-
 body {
     background-color: #35465C !important;
 }
@@ -515,7 +511,8 @@ body {
     padding-bottom: 20em;
 }
 
-.timeLineEvent, .timeAxis {
+.timeLineEvent,
+.timeAxis {
     position: absolute;
     left: $offsetTimeLineEvent;
 }
@@ -539,10 +536,6 @@ body {
         22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
         41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
         100px 100px 80px rgba(0, 0, 0, 0.07);
-
-    // min-width: 18em;
-    // max-width: 25em;
-
     width: calc(100% - #{$offsetTimeLineEvent} - 50px);
     z-index: 1;
 }
