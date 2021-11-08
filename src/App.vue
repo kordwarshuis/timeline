@@ -518,13 +518,13 @@ body {
 }
 
 .timeLineEvent {
-    opacity: 0.9;
+    opacity: 1;
     background: #f8f8f4;
     color: #0c2461;
     outline: 1px solid #b3b1af;
     padding: 1em 1em 2em;
-    transition: 0.1s ease-in-out;
-    transition-property: outline;
+    transition: 0.3s ease-in-out;
+    transition-property: outline background;
     transition-delay: 0ms;
     min-width: 10em;
 
@@ -547,11 +547,11 @@ body {
 
 .timeLineEventActive>span.main-info {
     opacity: 1;
-    outline: 5px solid #4B4E4D;
-    transition: 0.1s ease-in-out;
-    transition-property: outline;
-    transition-delay: 150ms;
-    background: #f5f2a0 !important;
+    outline: 1px solid #4B4E4D;
+    transition: 0.3s ease-in-out;
+    transition-property: outline background;
+    transition-delay: 0ms;
+    background: #f6f5da !important;
 }
 
 .timeDifferenceContainer {
@@ -629,7 +629,7 @@ body {
 video,
 .timeLineEvent img {
     display: block;
-    border: 3px solid #ef8800;
+    border: 1px solid #ef8800;
     max-width: 100%;
     margin: 1em auto;
 }
