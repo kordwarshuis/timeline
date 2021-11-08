@@ -1,7 +1,7 @@
 <template>
 <div id="app" class="">
     <main class="">
-        <div class="container ps-5 pe-5" style="max-width: 40em;">
+        <div class="container ps-1 pe-1" style="max-width: 40em;">
             <div class="row align-items-start">
                 <div class="col">
                     <div class="p-1">
@@ -532,7 +532,10 @@ body {
         41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
         100px 100px 80px rgba(0, 0, 0, 0.07);
 
-    min-width: 90%;
+    // min-width: 18em;
+    // max-width: 25em;
+
+    width: calc(100% - 155px);
     z-index: 1;
 }
 
@@ -586,7 +589,7 @@ body {
 .timeLineEventNav {
     display: block;
     position: absolute;
-    right: -1em;
+    right: -3em;
     top: 50%;
     transform: translateY(-50%);
     z-index: 4;
