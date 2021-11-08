@@ -516,8 +516,28 @@ export default {
                 }
             }
 
+            function focus2(e) {
+                let allTimeLineEvents = document.querySelectorAll(".timeLineEvent");
+
+                function removeAll() {
+                    for (let i = 0; i < allTimeLineEvents.length; i++) {
+                        allTimeLineEvents[i].classList.remove("timeLineEventActive");
+                    }
+                }
+
+                if (e.target && e.target.matches("button.timeLineEventNavPrev") || e.target && e.target.matches("button.timeLineEventNavPrev2")) {
+                    removeAll();
+                    e.target.closest("div.timeLineEvent").previousSibling.classList.add("timeLineEventActive");
+                }
+                if (e.target && e.target.matches("button.timeLineEventNavNext") || e.target && e.target.matches("button.timeLineEventNavNext2")) {
+                    removeAll();
+                    e.target.closest("div.timeLineEvent").nextSibling.classList.add("timeLineEventActive");
+                }
+            }
+
             document.querySelector("body").addEventListener("mouseover", focus, false);
             document.querySelector("body").addEventListener("touchend", focus, true);
+            document.querySelector("body").addEventListener("click", focus2, true);
 
             // document.addEventListener("focus", function () {
             // GA Google Analytics, track XMLHttpRequest
@@ -544,7 +564,7 @@ body {
 }
 
 #timeKnotsContainer {
-    padding-bottom: 200em;
+    margin-bottom: 2em;
 }
 
 .timeLineEvent,
@@ -553,6 +573,9 @@ body {
     left: $offsetTimeLineEvent;
 }
 
+// .timeLineEvent:last-of-type {
+//     margin-bottom: 200em;
+// }
 .timeLineEvent {
     opacity: 1;
     background: #f8f8f4;
