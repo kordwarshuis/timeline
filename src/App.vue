@@ -544,7 +544,6 @@ export default {
             }
 
             function focus2(e) {
-                console.log('e: ', e);
                 let allTimeLineEvents = document.querySelectorAll(".timeLineEvent");
 
                 function removeAll() {
