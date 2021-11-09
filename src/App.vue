@@ -37,6 +37,7 @@
 
                         <h1 class="ps-3 pe-3 pt-5">{{ introductionTitle }}</h1>
                         <!-- https://github.com/miaolz123/vue-markdown/issues/43 : -->
+                        <p class="ps-3 pe-3">{{localeDataSourceLinkTo}} <a target="_blank" rel="noopener" :href="dataSource">{{localeDataSourceTheFile}}</a></p>
                         <vue-markdown class="ps-3 pe-3" :source='introductionText'></vue-markdown>
 
                         <div id="timeKnotsContainer" style="position: relative; ">
@@ -44,15 +45,15 @@
                             <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
 
                                 <span :class="item.extraClass" v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
-                                    <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
-                                    <span v-if="item.counter>0" class="timeDifference timeDifferenceWithLastEvent text-center">
-                                        {{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}}
+                                    <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm border-0 float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
+                                    
+                                    <span v-if="item.counter>0" class="timeDifference timeDifferenceWithLastEvent text-center mb-3">
+                                        {{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}} (<time>{{ item.dateLong }} </time>)
                                     </span>
-                                    <time>{{ item.dateLong }} </time>
 
                                     <span class="timeLineEventNav ">
-                                        <button v-if="item.counter > 0" class="timeLineEventNavPrev btn btn-dark mb-2" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
-                                        <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-dark" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
+                                        <button v-if="item.counter > 0" class="timeLineEventNavPrev btn btn-lg btn-outline-dark mb-2 " @click="goToTimeLineEvent(item.counter,$event)">▲</button>
+                                        <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-lg btn-outline-dark" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                     </span>
 
                                     <h2 class="text-center">
@@ -67,7 +68,7 @@
                                         <vue-markdown>{{ item.Text }}</vue-markdown>
                                     </div>
 
-                                    <button class="timeLineEventNavNext2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
+                                    <button class="timeLineEventNavNext2 btn btn-outline-secondary btn-sm border-0 float-end" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                 </span>
                                 <template v-else>
                                     <time>{{ item.dateLong }}, {{ item.timeDifferenceWithFirstEvent }} {{localeTextAppend2 }}</time>
@@ -148,6 +149,7 @@ export default {
             homeURL: process.env.VUE_APP_HOME_URL,
             homeText: process.env.VUE_APP_HOME_TEXT,
             configMenuActive: process.env.VUE_APP_CONFIG_MENU_ACTIVE,
+            dataSource: process.env.VUE_APP_DATA_SOURCE,
             introduction: [],
             introductionTitle: "",
             introductionText: "",
@@ -158,7 +160,9 @@ export default {
             ],
             localeTextAppend1: localisation.textAppend1,
             localeTextAppend2: localisation.textAppend2,
-            localisationConfigMenuEnterPathToCSV: localisation.configMenu.enterPathToCSV
+            localisationConfigMenuEnterPathToCSV: localisation.configMenu.enterPathToCSV,
+            localeDataSourceLinkTo: localisation.dataSource.linkTo,
+            localeDataSourceTheFile: localisation.dataSource.theFile
         }
     },
     mounted() {
@@ -405,17 +409,20 @@ export default {
                 that.timeLineData.forEach(element => {
                     element.nodeType = "timeLineEvent";
                 })
-                // add indication for 'today' at the end of array. Sorting will take care of this
-                that.timeLineData.push({
-                    "Year": format(new Date(), "yyyy"),
-                    "Month": format(new Date(), "MM"),
-                    "Day": format(new Date(), "dd"),
-                    "Time": "00:00:00",
-                    "Headline": localisation.today,
-                    "Text": "",
-                    "nodeType": "timeLineEvent",
-                    "extraClass": "today"
-                })
+
+                if (process.env.VUE_APP_SHOW_TODAY === "true") {
+                    // add indication for 'today' at the end of array. Sorting will take care of this
+                    that.timeLineData.push({
+                        "Year": format(new Date(), "yyyy"),
+                        "Month": format(new Date(), "MM"),
+                        "Day": format(new Date(), "dd"),
+                        "Time": "00:00:00",
+                        "Headline": localisation.today,
+                        "Text": "",
+                        "nodeType": "timeLineEvent",
+                        "extraClass": "today"
+                    })
+                }
 
                 for (let i = 0; i < that.timeLineData.length; i++) {
                     fixTimeLineData(that.timeLineData[i]);
@@ -641,7 +648,7 @@ h6 {
         22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
         41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
         100px 100px 80px rgba(0, 0, 0, 0.07);
-    width: calc(100% - #{$offsetTimeLineEvent} - 50px);
+    width: calc(100% - #{$offsetTimeLineEvent} - 60px);
     z-index: 1;
 }
 
@@ -680,9 +687,9 @@ h6 {
 }
 
 .timeLineEvent time {
-    display: block;
+    // display: block;
     margin: 0.3em 0 0 0;
-    font-size: 0.7em;
+    // font-size: 0.7em;
     font-style: italic;
 }
 
@@ -712,7 +719,7 @@ h6 {
 .timeLineEventNav {
     display: block;
     position: absolute;
-    right: -3em;
+    right: -4em;
     top: 50%;
     transform: translateY(-50%);
     z-index: 4;
@@ -726,6 +733,20 @@ h6 {
 .timeLineEventNav button.visible {
     display: block;
 }
+
+
+
+#item0 button.timeLineEventNavNext:first-of-type {
+    background: #b71540;
+    color: #eee;
+}
+#item0 button.timeLineEventNavNext2:first-of-type {
+    display: none;
+}
+
+
+
+
 
 .timeAxis {
     font-size: 0.8em;
