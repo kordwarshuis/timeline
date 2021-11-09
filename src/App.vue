@@ -57,7 +57,7 @@
                                     </span>
 
                                     <h2 class="">
-                                        <vue-markdown>{{ item.Headline }}</vue-markdown>
+                                        {{ item.Headline }}
                                         <!-- Collapse button -->
                                         <!-- <template v-if="item.Text!==''">
                                             <a style="position: absolute; top: 0.2em; right: 0.2em;" class="btn btn-outline-secondary btn-sm ms-2" data-bs-toggle="collapse" :href="'#timeLineEvent' + item.counter" role="button" aria-expanded="false" :aria-controls="'timeLineEvent' + item.counter">-</a>
