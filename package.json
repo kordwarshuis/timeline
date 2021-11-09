@@ -19,6 +19,7 @@
     "date-fns": "^2.25.0",
     "jquery": "^3.6.0",
     "jshint": "^2.13.1",
+    "mousetrap": "^1.6.5",
     "offcanvas-bootstrap": "^2.5.2",
     "seamless-scroll-polyfill": "^2.1.5",
     "vue": "^2.6.11",
