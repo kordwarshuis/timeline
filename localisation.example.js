@@ -4,5 +4,6 @@ export const localisation = {
     textAppend2: "from the beginning",
     configMenu: {
         enterPathToCSV: "Enter the path to a csv file:"
-    }
+    },
+    today: "Today"
 };
