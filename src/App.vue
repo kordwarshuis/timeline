@@ -172,7 +172,7 @@ export default {
         this.$nextTick(function () {
             this.inputSourceURL = this.$refs.sourceURL;
             this.getDataSource();
-        })
+        });
     },
     methods: {
         getDataSource() {
@@ -543,6 +543,7 @@ export default {
             }
 
             function focus2(e) {
+                console.log('e: ', e);
                 let allTimeLineEvents = document.querySelectorAll(".timeLineEvent");
 
                 function removeAll() {
