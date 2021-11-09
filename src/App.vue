@@ -55,6 +55,7 @@
                                     <span class="timeLineEventNav ">
                                         <button v-if="item.counter > 0" class="timeLineEventNavPrev btn btn-lg btn-outline-dark mb-2 " @click="goToTimeLineEvent(item.counter,$event)">▲</button>
                                         <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-lg btn-outline-dark" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
+                                        <div v-if="item.counter === 0" class="animated-arrow"></div>
                                     </span>
 
                                     <h2 class="text-center">
@@ -746,11 +747,6 @@ h6 {
     display: block;
 }
 
-#item0 button.timeLineEventNavNext:first-of-type {
-    background: #b71540;
-    color: #eee;
-}
-
 #item0 button.timeLineEventNavNext2:first-of-type {
     display: none;
 }
@@ -758,6 +754,51 @@ h6 {
 .timeAxis {
     font-size: 0.8em;
     z-index: 0;
+}
+
+// https://codepen.io/humajono/pen/lBnfc, adapted
+.animated-arrow {
+    position: absolute;
+    top: -170%;
+    left: 50%;
+    margin-left: 0px;
+    animation: arrow-bounce 3s both infinite;
+}
+
+.animated-arrow:before,
+.animated-arrow:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -24px;
+    width: 30px;
+    height: 7px;
+    border-radius: 10px;
+    display: block;
+    background: #111;
+    transform: rotate(-45deg);
+}
+
+.animated-arrow:after {
+    right: inherit;
+    left: -24px;
+    transform: rotate(45deg);
+}
+
+@keyframes arrow-bounce {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(60px);
+        opacity: 0
+    }
 }
 
 video,
