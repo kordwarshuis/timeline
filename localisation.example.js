@@ -5,5 +5,9 @@ export const localisation = {
     configMenu: {
         enterPathToCSV: "Enter the path to a csv file:"
     },
-    today: "Today"
+    today: "Today",
+    dataSource: {
+        linkTo: "Link to",
+        theFile: "the data (CSV)."
+    }
 };
