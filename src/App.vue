@@ -87,15 +87,15 @@
             <!-- Scale -->
             <div class="row justify-content-center">
                 <div class="col text-center clearfix">
-                        <div class="primary button-group d-inline border-end pe-2">
-                            <input class="button me-1" type="button" value="A –" id="minus">
-                            <input class="button" type="button" value="A +" id="plus">
-                        </div>
-                        <div class="primary button-group d-inline">
-                            <input class="button" type="button" value="scale –" id="scale-minus">
-                            <span id="scaleRangeInfo" class="ms-2 me-2"></span>
-                            <input class="button" type="button" value="scale +" id="scale-plus">
-                        </div>
+                    <div class="primary button-group d-inline border-end pe-2">
+                        <input class="button me-1" type="button" value="A –" id="minus">
+                        <input class="button" type="button" value="A +" id="plus">
+                    </div>
+                    <div class="primary button-group d-inline">
+                        <input class="button" type="button" value="scale –" id="scale-minus">
+                        <span id="scaleRangeInfo" class="ms-2 me-2"></span>
+                        <input class="button" type="button" value="scale +" id="scale-plus">
+                    </div>
                 </div>
             </div>
         </div>
