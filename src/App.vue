@@ -10,7 +10,7 @@
                 <!-- <h1 class="">Configuration</h1> -->
                 <!-- Path to csv -->
                 <div class="p-2" id="enter-input-file-block">
-                    <p>{{localisationConfigMenuEnterPathToCSV}} <input class="w-100" id="sourceURL" type="text" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pub?gid=0&single=true&output=csv" onfocus="this.value=''"></p>
+                    <p>{{localisationConfigMenuEnterPathToCSV}} <input class="w-100" ref="sourceURL" id="sourceURL" type="text" value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSbyepAqMIKF5b1mirtGDe7dbT0SP319as6X4AWEpNk74dzMgj1gZ3cUXUQDSDTj5zrrRCb-4ao1XgH/pub?gid=0&single=true&output=csv" onfocus="this.value=''"></p>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
 
                                 <span :class="item.extraClass" v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm border-0 float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
-                                    
+
                                     <span v-if="item.counter>0" class="timeDifference timeDifferenceWithLastEvent text-center mb-3">
                                         {{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}} (<time>{{ item.dateLong }} </time>)
                                     </span>
@@ -146,10 +146,11 @@ export default {
     },
     data: function () {
         return {
+            inputSourceURL: null,
             homeURL: process.env.VUE_APP_HOME_URL,
             homeText: process.env.VUE_APP_HOME_TEXT,
             configMenuActive: process.env.VUE_APP_CONFIG_MENU_ACTIVE,
-            dataSource: process.env.VUE_APP_DATA_SOURCE,
+            dataSource: "",
             introduction: [],
             introductionTitle: "",
             introductionText: "",
@@ -169,8 +170,20 @@ export default {
         this.main();
         this.fontSize();
         this.randomBackgroundColor();
+        
+        this.$nextTick(function () {
+            this.inputSourceURL = this.$refs.sourceURL;
+            this.getDataSource();
+        })
     },
     methods: {
+        getDataSource() {
+            if (process.env.VUE_APP_DATA_SOURCE !== "") {
+                this.dataSource = process.env.VUE_APP_DATA_SOURCE;
+            } else {
+                this.dataSource = this.inputSourceURL.value;
+            }
+        },
         goToTimeLineEvent(i, event) {
             if (event.target.classList.contains("timeLineEventNavNext") || event.target.classList.contains("timeLineEventNavNext2")) {
                 i++
@@ -734,19 +747,14 @@ h6 {
     display: block;
 }
 
-
-
 #item0 button.timeLineEventNavNext:first-of-type {
     background: #b71540;
     color: #eee;
 }
+
 #item0 button.timeLineEventNavNext2:first-of-type {
     display: none;
 }
-
-
-
-
 
 .timeAxis {
     font-size: 0.8em;
