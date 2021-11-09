@@ -38,12 +38,12 @@
                         <h1 class="ps-3 pe-3 pt-5">{{ introductionTitle }}</h1>
                         <!-- https://github.com/miaolz123/vue-markdown/issues/43 : -->
                         <vue-markdown class="ps-3 pe-3" :source='introductionText'></vue-markdown>
-                        
+
                         <div id="timeKnotsContainer" style="position: relative; ">
 
                             <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
 
-                                <span v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
+                                <span :class="item.extraClass" v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
                                     <span v-if="item.counter>0" class="timeDifferenceContainer">
                                         <span class='timeDifference timeDifferenceWithLastEvent'>{{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}}</span>
@@ -406,6 +406,17 @@ export default {
                 that.timeLineData.forEach(element => {
                     element.nodeType = "timeLineEvent";
                 })
+                // add indication for 'today' at the end of array. Sorting will take care of this
+                that.timeLineData.push({
+                    "Year": format(new Date(), "yyyy"),
+                    "Month": format(new Date(), "MM"),
+                    "Day": format(new Date(), "dd"),
+                    "Time": "00:00:00",
+                    "Headline": localisation.today,
+                    "Text": "",
+                    "nodeType": "timeLineEvent",
+                    "extraClass": "today"
+                })
 
                 for (let i = 0; i < that.timeLineData.length; i++) {
                     fixTimeLineData(that.timeLineData[i]);
@@ -448,7 +459,7 @@ export default {
                     fixTimeLineData(that.timeLineData[that.timeLineData.length - 1]);
 
                     // only proceed if the date is before the last event date
-                    if (getUnixTime(new Date(that.timeLineData[that.timeLineData.length - 1].date)) < (getUnixTime(new Date(lastDate)) + getUnixTime(new Date(lastDate))/100)) {
+                    if (getUnixTime(new Date(that.timeLineData[that.timeLineData.length - 1].date)) < (getUnixTime(new Date(lastDate)) + getUnixTime(new Date(lastDate)) / 100)) {
                         createTimeAxis();
                     }
                 }());
@@ -609,6 +620,20 @@ body {
     transition-property: outline background;
     transition-delay: 0ms;
     background: #f6f5da !important;
+}
+
+.today {
+    background: rgb(203, 242, 245) !important;
+    padding: 0;
+}
+
+.today .timeDifferenceContainer {
+    display: none;
+}
+
+.today h2 {
+    text-align: center;
+    font-size: 3em !important;
 }
 
 .timeDifferenceContainer {
