@@ -47,8 +47,11 @@
                                 <span :class="item.extraClass" v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm border-0 float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
 
-                                    <span v-if="item.counter>0" class="timeDifference timeDifferenceWithLastEvent text-center mb-3">
+                                    <span v-if="item.counter>-0" class="timeDifference timeDifferenceWithLastEvent text-center mb-3">
                                         {{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}} (<time>{{ item.dateLong }} </time>)
+                                    </span>
+                                    <span v-else class="timeDifference timeDifferenceWithLastEvent text-center mb-3">
+                                        <time>{{ item.dateLong }} </time>
                                     </span>
 
                                     <span class="timeLineEventNav ">
@@ -170,7 +173,7 @@ export default {
         this.main();
         this.fontSize();
         this.randomBackgroundColor();
-        
+
         this.$nextTick(function () {
             this.inputSourceURL = this.$refs.sourceURL;
             this.getDataSource();
