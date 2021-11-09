@@ -41,9 +41,7 @@
                         <vue-markdown class="ps-3 pe-3" :source='introductionText'></vue-markdown>
 
                         <div id="timeKnotsContainer" style="position: relative; ">
-
                             <div :class="item.nodeType" :id="'item' + item.counter" v-bind:style="'top: ' + item.top + 'px;padding: 0;'" v-for="item in timeLineData" v-bind:key="item.counter">
-
                                 <span :class="item.extraClass" v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm border-0 float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
 
@@ -76,7 +74,6 @@
                                 <template v-else>
                                     <time>{{ item.dateLong }}, {{ item.timeDifferenceWithFirstEvent }} {{localeTextAppend2 }}</time>
                                 </template>
-
                             </div>
                         </div>
                     </div>
@@ -88,23 +85,21 @@
     <footer class="footer mt-auto py-3 bg-light small border-top" style="position: fixed; bottom: 0; left: 0; z-index: 3;width: 100%;padding: 0.5em !important;">
         <div class="container">
             <!-- Scale -->
-            <div class="row">
-                <div class="col ">
-                    <div class="primary button-group float-start border-end pe-2">
-                        <input class="button me-1" type="button" value="A –" id="minus">
-                        <input class="button" type="button" value="A +" id="plus">
-                    </div>
-
-                    <div class="primary button-group float-start ps-2">
-                        <input class="button" type="button" value="scale –" id="scale-minus">
-                        <span id="scaleRangeInfo" class="ms-2 me-2"></span>
-                        <input class="button" type="button" value="scale +" id="scale-plus">
-                    </div>
+            <div class="row justify-content-center">
+                <div class="col text-center clearfix">
+                        <div class="primary button-group d-inline border-end pe-2">
+                            <input class="button me-1" type="button" value="A –" id="minus">
+                            <input class="button" type="button" value="A +" id="plus">
+                        </div>
+                        <div class="primary button-group d-inline">
+                            <input class="button" type="button" value="scale –" id="scale-minus">
+                            <span id="scaleRangeInfo" class="ms-2 me-2"></span>
+                            <input class="button" type="button" value="scale +" id="scale-plus">
+                        </div>
                 </div>
             </div>
         </div>
     </footer>
-
 </div>
 </template>
 
