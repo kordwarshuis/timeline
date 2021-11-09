@@ -45,9 +45,8 @@
 
                                 <span :class="item.extraClass" v-if="item.nodeType === 'timeLineEvent'" v-bind:style="'background-color: ' + randomBackgroundColor()" style="display: block;" class="clearfix main-info p-1 ps-3 pe-3">
                                     <button v-if="item.counter > 0" class="timeLineEventNavPrev2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▲</button>
-                                    <span v-if="item.counter>0" class="timeDifferenceContainer">
-                                        <span class='timeDifference timeDifferenceWithLastEvent'>{{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}}</span>
-                                        <span class='timeDifference timeDifferenceWithFirstEvent'> ({{item.timeDifferenceWithFirstEvent}} {{ localeTextAppend2 }}.)</span>
+                                    <span v-if="item.counter>0" class="timeDifference timeDifferenceWithLastEvent text-center">
+                                        {{item.timeDifferenceWithLastEvent}} {{localeTextAppend1}}
                                     </span>
                                     <time>{{ item.dateLong }} </time>
 
@@ -56,7 +55,7 @@
                                         <button v-if="item.counter < timeLineData.length - 2" class="timeLineEventNavNext btn btn-dark" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                     </span>
 
-                                    <h2 class="">
+                                    <h2 class="text-center">
                                         {{ item.Headline }}
                                         <!-- Collapse button -->
                                         <!-- <template v-if="item.Text!==''">
@@ -71,7 +70,7 @@
                                     <button class="timeLineEventNavNext2 btn btn-outline-secondary btn-sm float-end" @click="goToTimeLineEvent(item.counter,$event)">▼</button>
                                 </span>
                                 <template v-else>
-                                    <time>{{ item.dateLong }} </time>
+                                    <time>{{ item.dateLong }}, {{ item.timeDifferenceWithFirstEvent }} {{localeTextAppend2 }}</time>
                                 </template>
 
                             </div>
@@ -431,11 +430,6 @@ export default {
                 lastDate = that.timeLineData[that.timeLineData.length - 1].date;
                 // differenceInMilliseconds(firstDate,lastDate)
 
-                addTimeDifferences(that.timeLineData[0], that.timeLineData[0], firstDate);
-                for (let i = 1; i < that.timeLineData.length; i++) {
-                    addTimeDifferences(that.timeLineData[i], that.timeLineData[i - 1], firstDate);
-                }
-
                 let i = 1;
 
                 (function createTimeAxis() {
@@ -463,6 +457,11 @@ export default {
                         createTimeAxis();
                     }
                 }());
+
+                addTimeDifferences(that.timeLineData[0], that.timeLineData[0], firstDate);
+                for (let i = 1; i < that.timeLineData.length; i++) {
+                    addTimeDifferences(that.timeLineData[i], that.timeLineData[i - 1], firstDate);
+                }
 
                 // add unique key named “counter”
                 for (let i = 0; i < that.timeLineData.length; i++) {
@@ -596,7 +595,6 @@ body {
     font-family: poppinsregular, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-
 h1,
 h2,
 h3,
@@ -675,10 +673,10 @@ h6 {
     font-size: 3em !important;
 }
 
-.timeDifferenceContainer {
-    display: inline-block;
+.timeDifference {
+    display: block;
     padding: 0.1em;
-    font-size: 1.2em;
+    font-size: 0.8em;
 }
 
 .timeLineEvent time {
