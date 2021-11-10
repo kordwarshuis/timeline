@@ -31,7 +31,7 @@
                             </template>
 
                             <template v-if="homeURL !==''">
-                                <a :href="homeURL">{{homeText}}</a>
+                                <a id="menu-home" :href="homeURL">{{homeText}}</a>
                             </template>
                         </div>
 
