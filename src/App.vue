@@ -30,7 +30,6 @@
                                     </svg> menu
                                 </button>
                             </template>
-                            
 
                             <template v-if="homeURL !==''">
                                 <a id="menu-home" :href="homeURL">{{homeText}}</a>
@@ -129,6 +128,9 @@ import VueMarkdown from 'vue-markdown';
 import {
     localisation
 } from '../localisation';
+
+// import {tellGAClickedToPrev} from './main';
+// import {tellGAClickedToNext} from './main';
 
 let loc;
 switch (localisation.locale) {
@@ -557,25 +559,26 @@ export default {
                 if (e.target && e.target.matches("button.timeLineEventNavPrev") || e.target && e.target.matches("button.timeLineEventNavPrev2")) {
                     removeAll();
                     e.target.closest("div.timeLineEvent").previousSibling.classList.add("timeLineEventActive");
+                    // document.dispatchEvent(toPrevTimelineEventEvent);
                 }
                 if (e.target && e.target.matches("button.timeLineEventNavNext") || e.target && e.target.matches("button.timeLineEventNavNext2")) {
                     removeAll();
                     e.target.closest("div.timeLineEvent").nextSibling.classList.add("timeLineEventActive");
+                    // document.dispatchEvent(toNextTimelineEventEvent);
                 }
+
             }
 
+            // custom events
+            // let toPrevTimelineEventEvent = new Event("toPrevTimelineEvent");
+            // let toNextTimelineEventEvent = new Event("toNextTimelineEvent");
+            // document.addEventListener("toPrevTimelineEvent", tellGAClickedToPrev, false);
+            // document.addEventListener("toNextTimelineEvent", tellGAClickedToNext, false);
+
+            // event listeners
             document.querySelector("body").addEventListener("mouseover", focus, false);
             document.querySelector("body").addEventListener("touchend", focus, true);
             document.querySelector("body").addEventListener("click", focus2, true);
-
-            // document.addEventListener("focus", function () {
-            // GA Google Analytics, track XMLHttpRequest
-            //http://stackoverflow.com/a/15011353
-            // if (typeof (_gaq) !== "undefined") {
-            //   _gaq.push(["_trackPageview", window.location.pathname + window.location.hash + "-focus"]);
-            // }
-            // }, false);
-
         }
     }
 };
