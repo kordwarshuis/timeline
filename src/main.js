@@ -41,9 +41,9 @@ Vue.use(VueGtag, {
 //   }
 // }
 
-export {
-  tellGAClickedToPrev
-};
-export {
-  tellGAClickedToNext
-};
+// export {
+//   tellGAClickedToPrev
+// };
+// export {
+//   tellGAClickedToNext
+// };
